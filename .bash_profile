@@ -60,14 +60,6 @@ export PATH=${PATH}:${ANT_HOME}/bin
 JAVA_HOME=/usr/libexec/java_home
 export PATH=${PATH}:${JAVA_HOME}
 
-print_before_the_prompt () {
-    printf "\n$txtred%s: $bldgrn%s $txtcyn%s\n$txtrst" "$USER" "$PWD" "$(vcprompt)"
-    }
-
-    PROMPT_COMMAND=print_before_the_prompt
-
-PS1='-> $ '
-
 # tell ls to be colourful
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
