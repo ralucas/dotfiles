@@ -75,3 +75,15 @@ fi
 source ~/git-completion.bash
 source /Users/richardlucas/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 
+
+# __loopback-oracle-installer__:  Thu Jul 10 18:41:29 MDT 2014
+export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/richardlucas/Projects/sls-sample-app/node_modules/loopback-connector-oracle/node_modules/instantclient"
+
+# Go
+export PATH=$PATH:/usr/local/go/bin
+export GOPATH=$HOME/go
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh
+
