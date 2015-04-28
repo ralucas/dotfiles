@@ -33,7 +33,6 @@ bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
 export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/richardlucas/.rvm/bin
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/richardlucas/.rvm/bin
 export PGDATA=/usr/local/var/postgres
 
 ##
@@ -80,8 +79,10 @@ source /Users/richardlucas/.vim/bundle/powerline/powerline/bindings/bash/powerli
 export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/richardlucas/Projects/sls-sample-app/node_modules/loopback-connector-oracle/node_modules/instantclient"
 
 # Go
-export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go
+export GOBIN=$GOPATH/bin
+#export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$GOPATH/bin
 
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
