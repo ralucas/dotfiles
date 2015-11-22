@@ -1,15 +1,14 @@
+set nocompatible
+filetype off 
 autocmd VimEnter * NERDTree
 let NERDTreeShowHidden=1
-set nocompatible
-"filetype off
+inoremap jk <ESC>
+filetype plugin indent on
 syntax enable
 set background=dark
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags 
 set lines=999 columns=9999
-"let g:hybrid_use_iTerm_colors = 1
-"let g:molokai_original = 1
-colorscheme solarized 
-"silent! colorscheme inori
+colorscheme solarized
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -26,7 +25,6 @@ set encoding=utf-8
 set guifont=Anonymous\ Pro\ for\ Powerline:h18
 set fillchars+=stl:\ ,stlnc:\
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-"set rtp+=~/.vim/bundle/vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
@@ -47,17 +45,11 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'mattn/emmet-vim'
 Plugin 'duythinht/inori'
 Plugin 'othree/html5.vim'
 Plugin 'briancollins/vim-jst'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'fatih/vim-go'
-Plugin 'kchmck/vim-coffee-script'
 call vundle#end()
-inoremap jk <ESC>
-let g:slimv_swank_cmd = '!osascript -e "tell application \"iTerm\" to do script \"sbcl --load ~/.vim/bundle/slimv/slime/start-swank.lisp\""'
-filetype on
-filetype plugin indent on
 

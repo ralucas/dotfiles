@@ -32,32 +32,15 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/richardlucas/.rvm/bin
 export PGDATA=/usr/local/var/postgres
 
-##
-# Your previous /Users/richardlucas/.bash_profile file was backed up as /Users/richardlucas/.bash_profile.macports-saved_2013-09-16_at_18:30:34
-##
-
-# MacPorts Installer addition on 2013-09-16_at_18:30:34: adding an appropriate PATH variable for use with MacPorts.
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-# Finished adapting your PATH environment variable for use with MacPorts.
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-
-# __loopback-oracle-installer__:  Tue Jan  7 08:56:35 MST 2014
-export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/richardlucas/sls-sample-app/node_modules/loopback-connector-oracle/node_modules/instantclient"
-
-# Android SDK
-export PATH=${PATH}:/Users/richardlucas/Development/adt-bundle/sdk/platform-tools:/Users/richardlucas/Development/adt-bundle/sdk/tools
-
 # ANT
-ANT_HOME=/Users/richardlucas/Development/apache-ant-1.9.3
-export PATH=${PATH}:${ANT_HOME}/bin
+#ANT_HOME=$HOME/Development/apache-ant-1.9.3
+#export PATH=${PATH}:${ANT_HOME}/bin
 
 # JAVA
-JAVA_HOME=/usr/libexec/java_home
-export PATH=${PATH}:${JAVA_HOME}
+#JAVA_HOME=/usr/libexec/java_home
+#export PATH=${PATH}:${JAVA_HOME}
 
 # tell ls to be colourful
 export CLICOLOR=1
@@ -71,20 +54,12 @@ if [ -d "$HOME/Library/Python/2.7/bin" ]; then
         PATH="$HOME/Library/Python/2.7/bin:$PATH"
 fi
 
-source ~/git-completion.bash
-source /Users/richardlucas/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
-
-
-# __loopback-oracle-installer__:  Thu Jul 10 18:41:29 MDT 2014
-export DYLD_LIBRARY_PATH="$DYLD_LIBRARY_PATH:/Users/richardlucas/Projects/sls-sample-app/node_modules/loopback-connector-oracle/node_modules/instantclient"
+source $HOME/git-completion.bash
+source $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 
 # Go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 #export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$GOPATH/bin
-
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
 
