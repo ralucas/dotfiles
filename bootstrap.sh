@@ -81,3 +81,6 @@ mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 cat .bash_profile >> ~/.bash_profile
 source ~/.bash_profile
 
+# SET CAPS LOCK TO CTRL
+setxkbmap -layout us -option ctrl:nocaps
+
