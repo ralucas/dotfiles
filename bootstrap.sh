@@ -6,7 +6,7 @@ while getopts ":pvh" opt; do
       ;;
     v ) vscode=1
       ;;
-    h ) echo "Usage: sudo sh bootstrap.sh [-p powerline install] [-v vscode install]"; exit 0
+    h ) echo -e "\tUsage: \n\tsh bootstrap.sh [-p for powerline install] [-v for vscode install]"; exit 0
       ;;
   esac
 done
@@ -47,9 +47,12 @@ source ~/.bash_profile
 
 # VIM SETUP
 pkgmgr install vim
+mkdir -p ~/.vim/bundle
+mkdir -p ~/.vim/colors
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 cp ${dotfiles_dir}/.vimrc ~/.vimrc
 vim +PluginInstall +qall
+cp ~/.vim/bundle/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/
 
 # NODE.JS
 wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
@@ -69,10 +72,16 @@ pkgmgr update
 # GO
 wget https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz
 tar -C /usr/local -xvf go*.tar.gz
-echo "\n# GO" | tee -a ~/.bash_profile
+echo -e "\n# GO" | tee -a ~/.bash_profile
 echo "export GOPATH=$HOME/go" | tee -a ~/.bash_profile
 echo "export GOBIN=$GOPATH/bin" | tee -a ~/.bash_profile
 echo "export PATH=$PATH:$GOPATH/bin" | tee -a ~/.bash_profile
+
+# PYTHON
+pkgmgr install numpy opencv*
+sudo pip install numpy
+sudo pip install matplotlib
+sudo pip install scipy
 
 # ERLANG & ELIXIR
 pkgmgr install erlang
@@ -88,7 +97,7 @@ pkgmgr install mysql-server
 
 # POSTGRES
 pkgmgr postgresql-server
-echo "\n# POSTGRES\nexport PGDATA=/usr/local/var/postgres" >> ~/.bash_profile
+echo -e "\n# POSTGRES\nexport PGDATA=/usr/local/var/postgres" >> ~/.bash_profile
 
 # REDIS
 wget -P /opt/ http://download.redis.io/releases/redis-stable.tar.gz
@@ -101,7 +110,7 @@ ln -s /opt/redis-stable/src/redis-server /usr/local/bin/redis-server
 pkgmgr update
 
 # MONGODB
-# TODO: Get mongodb
+pkgmgr install mongodb mongodb-server
 
 pkgmgr update
 
@@ -109,10 +118,10 @@ pkgmgr update
 pkgmgr install nginx-full
 
 # GIT COMPLETION
-wget https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
-mkdir -p ~/scripts
-mv git-completion.bash ~/scripts/git-completion.bash
-echo "\n# GIT COMPLETION\nsource $HOME/scripts/git-completion.bash" >> .bash_profile
+echo -e "\n# GIT COMPLETION & PROMPT" | tee -a ~/.bash_profile
+echo -e "source /usr/share/git-core/contrib/completion/git-completion.bash" | tee -a ~/.bash_profile
+echo -e "source /usr/share/git-core/contrib/completion/git-prompt.sh" | tee -a ~/.bash_profile
+source ~/.bash_profile
 
 # POWERLINE SETUP
 pip install --user powerline-status
@@ -124,9 +133,12 @@ fc-cache -vf ~/.fonts/
 mkdir -p ~/.config/fontconfig/conf.d
 mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
 
+echo -e "\n# COMMAND LINE PROMPT" >> ~/.bash_profile
 if [[ "$powerline" -eq 1 ]]; then
-  echo "\n# POWERLINE\nsource $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh" >> .bash_profile
+  echo -e "\nsource $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
   source ~/.bash_profile
+else
+  echo "PS1='[\e[36m\u@\h \e[34m\W\e[31m$(__git_ps1 " (%s)")\e[0m] \$ '" | tee -a ~/.bash_profile
 fi
 
 # SET CAPS LOCK TO CTRL
@@ -142,5 +154,4 @@ fi
 
 # CLEANUP
 rm ${dotfiles_dir}/go*
-
 
