@@ -1,3 +1,4 @@
+# SET COLORS
 txtblk='\e[0;30m' # Black - Regular
 txtred='\e[0;31m' # Red
 txtgrn='\e[0;32m' # Green
@@ -32,34 +33,15 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-export PGDATA=/usr/local/var/postgres
-
-# ANT
-#ANT_HOME=$HOME/Development/apache-ant-1.9.3
-#export PATH=${PATH}:${ANT_HOME}/bin
-
-# JAVA
-#JAVA_HOME=/usr/libexec/java_home
-#export PATH=${PATH}:${JAVA_HOME}
-
 # tell ls to be colourful
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+
 # tell grep to highlight matches
 export GREP_OPTIONS='--color=auto'
-# alias
-alias ls='ls -FGal'
 
-if [ -d "$HOME/Library/Python/2.7/bin" ]; then
-        PATH="$HOME/Library/Python/2.7/bin:$PATH"
-fi
+# alias ll
+alias ll='ls -FGal'
 
-source $HOME/git-completion.bash
-source $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh
 
-# Go
-export GOPATH=$HOME/go
-export GOBIN=$GOPATH/bin
-#export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$GOPATH/bin
-
+\n# GIT COMPLETION\nsource /home/richard/scripts/git-completion.bash

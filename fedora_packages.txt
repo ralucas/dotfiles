@@ -1,0 +1,4 @@
+gnome-tweak-tool
+terminator
+gnome-shell-extension-pomodoro
+ 
