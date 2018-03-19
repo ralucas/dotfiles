@@ -33,13 +33,13 @@ bakcyn='\e[46m'   # Cyan
 bakwht='\e[47m'   # White
 txtrst='\e[0m'    # Text Reset
 
-# tell ls to be colourful
+# LS COLORS
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
-# tell grep to highlight matches
+# GREP HIGHLIGHT OPTIONS
 export GREP_OPTIONS='--color=auto'
 
-# alias ll
+# ALIAS LL 
 alias ll='ls -FGal'
 
