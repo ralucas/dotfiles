@@ -43,5 +43,3 @@ export GREP_OPTIONS='--color=auto'
 # alias ll
 alias ll='ls -FGal'
 
-
-\n# GIT COMPLETION\nsource /home/richard/scripts/git-completion.bash

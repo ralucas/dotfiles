@@ -1,5 +1,8 @@
 #!/bin/bash -e
 
+powerline=0
+vscode=0
+
 while getopts ":pvh" opt; do
   case ${opt} in
     p ) powerline=1
