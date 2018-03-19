@@ -38,7 +38,7 @@ export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 
 # GREP HIGHLIGHT OPTIONS
-export GREP_OPTIONS='--color=auto'
+alias grep="/usr/bin/grep --color=auto"
 
 # ALIAS LL 
 alias ll='ls -FGal'

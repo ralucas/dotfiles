@@ -113,12 +113,8 @@ make
 ln -s /opt/redis-stable/src/redis-server /usr/local/bin/redis-server
 # TODO: add redis to auto start on startup
 
-pkgmgr update
-
 # MONGODB
 pkgmgr install mongodb mongodb-server
-
-pkgmgr update
 
 # NGINX
 pkgmgr install nginx-full
@@ -167,4 +163,5 @@ fi
 
 # CLEANUP
 rm ${dotfiles_dir}/go*
+pkgmgr update
 
