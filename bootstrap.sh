@@ -17,10 +17,13 @@ pkgmgr() {
   sudo dnf -y "$@"
 }
 
+distro="fedora"
+
 if [ "${os}" == "Darwin" ]; then
   pkgmgr() {
     brew "$@"
   }
+  distro="mac"
 elif [ "$os" == "Linux" ]; then
   apt=`grep -iE 'ubuntu|debian' /etc/*release`
   if [[ "$apt" -n ]]; then
@@ -150,6 +153,13 @@ if [[ "$vscode" -eq 1 ]]; then
   sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
   dnf check-update
   dnf install code
+fi
+
+# DISTRO SPECIFIC
+if [[ ${dotfiles_dir}/${distro}_packages.txt -n ]]; then
+  for pkg in `cat ${dofiles_dir}/${distro}_packages.txt`; do
+    pkgmgr install $pkg;
+  done
 fi
 
 # CLEANUP
