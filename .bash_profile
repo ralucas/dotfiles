@@ -43,3 +43,5 @@ alias grep="/usr/bin/grep --color=auto"
 # ALIAS LL 
 alias ll='ls -FGal'
 
+#ALIAS CLIP
+alias clip=`xclip -clipboard`
