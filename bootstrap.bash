@@ -9,7 +9,7 @@ while getopts ":pvh" opt; do
       ;;
     v ) vscode=1
       ;;
-    h ) echo -e "\tUsage: \n\tsh bootstrap.sh [-p for powerline install] [-v for vscode install]"; exit 0
+    h ) echo -e "\tUsage: \n\tbash bootstrap.bash [-p for powerline install] [-v for vscode install]"; exit 0
       ;;
   esac
 done
@@ -21,19 +21,23 @@ pkgmgr() {
 }
 
 distro="fedora"
+wm=""
 
-if [ "${os}" == "Darwin" ]; then
+if [[ $os == "Darwin" ]]; then
   pkgmgr() {
     brew "$@"
   }
   distro="mac"
-elif [ "$os" == "Linux" ]; then
-  apt=`grep -iE 'ubuntu|debian' /etc/*release`
-  if [[ "$apt" -n ]]; then
+  wm="mac"
+elif [[ $os == "Linux" ]]; then
+  wm=`echo $XDG_CURRENT_DESKTOP | tr '[:upper:]' '[:lower:]'`
+  apt=`grep -ioh -e ubuntu -e debian /etc/*release`
+  if [[ "$apt" ]]; then
     echo "Using apt-get"
     pkgmgr() {
       sudo apt-get -y "$@"
     }
+    distro="$apt"
   else
     echo "Using dnf"
   fi
@@ -97,9 +101,9 @@ pkgmgr install elixir
 pkgmgr install clisp
 
 # MYSQL
-pkgmgr dist-upgrade
 pkgmgr install mysql-client
-pkgmgr install mysql-server
+pkgmgr install mysql-server mysql-community-server
+
 
 # POSTGRES
 pkgmgr postgresql-server
@@ -119,7 +123,9 @@ pkgmgr install mongodb mongodb-server
 # NGINX
 pkgmgr install nginx-full
 
-# GIT COMPLETION
+# GIT TOOLS
+git clone https://github.com/git/git.git --depth=1
+cp -r git/contrib/** /usr/share/git-core/contrib
 echo -e "\n# GIT COMPLETION & PROMPT" | tee -a ~/.bash_profile
 echo -e "source /usr/share/git-core/contrib/completion/git-completion.bash" | tee -a ~/.bash_profile
 echo -e "source /usr/share/git-core/contrib/completion/git-prompt.sh" | tee -a ~/.bash_profile
@@ -140,7 +146,7 @@ if [[ "$powerline" -eq 1 ]]; then
   echo -e "\nsource $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
   source ~/.bash_profile
 else
-  echo "PS1='[\e[36m\u@\h \e[34m\W\e[31m$(__git_ps1 " (%s)")\e[0m] \$ '" | tee -a ~/.bash_profile
+  echo PS1='[\[\e[36m\]\u@\h:\[\e[34m\]\W\[\e[31m$(__git_ps1 " (%s)")\]\[\e[0m]\] \$ ' | tee -a ~/.bash_profile
 fi
 
 # SET CAPS LOCK TO CTRL
@@ -154,8 +160,11 @@ if [[ "$vscode" -eq 1 ]]; then
   dnf install code
 fi
 
+# TEXMAKER
+pkgmgr install texmaker
+
 # DISTRO SPECIFIC
-if [[ ${dotfiles_dir}/${distro}_packages.txt -n ]]; then
+if [[ ${dotfiles_dir}/${wm}_packages.txt ]]; then
   for pkg in `cat ${dofiles_dir}/${distro}_packages.txt`; do
     pkgmgr install $pkg;
   done
@@ -163,5 +172,7 @@ fi
 
 # CLEANUP
 rm ${dotfiles_dir}/go*
+rm -rf ${dotfiles_dir}/git
 pkgmgr update
+
 
