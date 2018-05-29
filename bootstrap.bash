@@ -125,10 +125,10 @@ pkgmgr install nginx-full
 
 # GIT TOOLS
 git clone https://github.com/git/git.git --depth=1
-cp -r git/contrib/** /usr/share/git-core/contrib
+cp -r git/contrib/** /usr/local/share/git-core/contrib
 echo -e "\n# GIT COMPLETION & PROMPT" | tee -a ~/.bash_profile
-echo -e "source /usr/share/git-core/contrib/completion/git-completion.bash" | tee -a ~/.bash_profile
-echo -e "source /usr/share/git-core/contrib/completion/git-prompt.sh" | tee -a ~/.bash_profile
+echo -e "source /usr/local/share/git-core/contrib/completion/git-completion.bash" | tee -a ~/.bash_profile
+echo -e "source /usr/local/share/git-core/contrib/completion/git-prompt.sh" | tee -a ~/.bash_profile
 source ~/.bash_profile
 
 # POWERLINE SETUP
