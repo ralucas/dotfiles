@@ -146,7 +146,7 @@ if [[ "$powerline" -eq 1 ]]; then
   echo -e "\nsource $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
   source ~/.bash_profile
 else
-  echo 'export PS1="[\[\e[36m\]\u\[\e[m\]:\[\e[34m\]\w\[\e[m\]\[\e[31m\]\`parse_git_branch\`\[\e[m\]] \\$ "' | tee -a ~/.bash_profile
+  echo 'export PS1="[\[\e[36m\]\u\[\e[m\]:\[\e[34m\]\w\[\e[m\]\[\e[31m$(__git_ps1 " (%s)")\]\[\e[m\]] \\$ "' | tee -a ~/.bash_profile
 fi
 
 # SET CAPS LOCK TO CTRL
