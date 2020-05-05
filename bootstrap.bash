@@ -163,6 +163,20 @@ fi
 # TEXMAKER
 pkgmgr install texmaker
 
+# MONITORING
+pip install s-tui --user
+pkgmgr install -y htop stress
+
+echo "PATH=$PATH:/.local/bin" >> .bash_profile
+
+## TODO:
+# 1. Install presto, zsh, and pure theme
+# 2. Install anaconda for python
+# 3. Install kafka, zookeeper, and prometheus
+# 4. Install spark and hadoop
+# 5. Install java and scala
+
+
 # DISTRO SPECIFIC
 if [[ ${dotfiles_dir}/${wm}_packages.txt ]]; then
   for pkg in `cat ${dofiles_dir}/${distro}_packages.txt`; do
