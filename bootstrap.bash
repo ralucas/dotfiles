@@ -44,6 +44,7 @@ pkgmgr install -y git curl zlib1g-dev build-essential libssl-dev libreadline-dev
 # GIT SETUP
 git config --global color.ui true
 mv git-templates ~/.git-templates
+chmod a+x ~/.git-templates/hooks/*
 
 # VIM SETUP
 pkgmgr install -y vim
