@@ -1,8 +1,5 @@
 #!/bin/bash -ex
 
-powerline=0
-vscode=0
-
 while getopts ":pvh" opt; do
   case ${opt} in
     p ) powerline=1
@@ -47,13 +44,13 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # BASICS
 pkgmgr update
-pkgmgr install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
-pkgmgr install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
-git config --global color.ui true
+pkgmgr install git curl zlib1g-dev build-essential libssl-dev libreadline-dev \
+  libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties \
+  libffi-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
 
-# BASH_PROFILE SETUP
-cat ${dotfiles_dir}/.bash_profile >> ~/.bash_profile
-source ~/.bash_profile
+# GIT SETUP
+git config --global color.ui true
+mv git-templates ~/.git-templates
 
 # VIM SETUP
 pkgmgr install vim
@@ -87,12 +84,6 @@ echo "export GOPATH=$HOME/go" | tee -a ~/.bash_profile
 echo "export GOBIN=$GOPATH/bin" | tee -a ~/.bash_profile
 echo "export PATH=$PATH:$GOPATH/bin" | tee -a ~/.bash_profile
 
-# PYTHON
-pkgmgr install numpy opencv*
-sudo pip install numpy
-sudo pip install matplotlib
-sudo pip install scipy
-
 # ERLANG & ELIXIR
 pkgmgr install erlang
 pkgmgr install elixir
@@ -103,7 +94,6 @@ pkgmgr install clisp
 # MYSQL
 pkgmgr install mysql-client
 pkgmgr install mysql-server mysql-community-server
-
 
 # POSTGRES
 pkgmgr postgresql-server
@@ -122,32 +112,6 @@ pkgmgr install mongodb mongodb-server
 
 # NGINX
 pkgmgr install nginx-full
-
-# GIT TOOLS
-git clone https://github.com/git/git.git --depth=1
-cp -r git/contrib/** /usr/local/share/git-core/contrib
-echo -e "\n# GIT COMPLETION & PROMPT" | tee -a ~/.bash_profile
-echo -e "source /usr/local/share/git-core/contrib/completion/git-completion.bash" | tee -a ~/.bash_profile
-echo -e "source /usr/local/share/git-core/contrib/completion/git-prompt.sh" | tee -a ~/.bash_profile
-source ~/.bash_profile
-
-# POWERLINE SETUP
-pip install --user powerline-status
-wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-mkdir -p ~/.fonts
-mv PowerlineSymbols.otf ~/.fonts/
-fc-cache -vf ~/.fonts/
-mkdir -p ~/.config/fontconfig/conf.d
-mv 10-powerline-symbols.conf ~/.config/fontconfig/conf.d/
-
-echo -e "\n# COMMAND LINE PROMPT" >> ~/.bash_profile
-if [[ "$powerline" -eq 1 ]]; then
-  echo -e "\nsource $HOME/.vim/bundle/powerline/powerline/bindings/bash/powerline.sh" >> ~/.bash_profile
-  source ~/.bash_profile
-else
-  echo 'export PS1="[\[\e[36m\]\u\[\e[m\]:\[\e[34m\]\w\[\e[m\]\[\e[31m$(__git_ps1 " (%s)")\]\[\e[m\]] \\$ "' | tee -a ~/.bash_profile
-fi
 
 # SET CAPS LOCK TO CTRL
 setxkbmap -layout us -option ctrl:nocaps
@@ -175,7 +139,6 @@ echo "PATH=$PATH:/.local/bin" >> .bash_profile
 # 3. Install kafka, zookeeper, and prometheus
 # 4. Install spark and hadoop
 # 5. Install java and scala
-
 
 # DISTRO SPECIFIC
 if [[ ${dotfiles_dir}/${wm}_packages.txt ]]; then
