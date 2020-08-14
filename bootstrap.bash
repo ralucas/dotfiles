@@ -1,15 +1,8 @@
 #!/bin/bash -ex
 
-while getopts ":pvh" opt; do
-  case ${opt} in
-    p ) powerline=1
-      ;;
-    v ) vscode=1
-      ;;
-    h ) echo -e "\tUsage: \n\tbash bootstrap.bash [-p for powerline install] [-v for vscode install]"; exit 0
-      ;;
-  esac
-done
+# VERSIONS
+go_ver="1.15"
+node_ver="12.18.3"
 
 os=`uname -s`
 
@@ -44,40 +37,35 @@ dotfiles_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # BASICS
 pkgmgr update
-pkgmgr install git curl zlib1g-dev build-essential libssl-dev libreadline-dev \
+pkgmgr install -y git curl zlib1g-dev build-essential libssl-dev libreadline-dev \
   libyaml-dev libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties \
-  libffi-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+  libffi-dev libgdbm-dev libncurses5-dev automake libtool bison libffi-dev ruby-full
 
 # GIT SETUP
 git config --global color.ui true
 mv git-templates ~/.git-templates
 
 # VIM SETUP
-pkgmgr install vim
+pkgmgr install -y vim
 mkdir -p ~/.vim/bundle
 mkdir -p ~/.vim/colors
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp ${dotfiles_dir}/.vimrc ~/.vimrc
+cp ${dotfiles_dir}/.basicvimrc ~/.vimrc
 vim +PluginInstall +qall
 cp ~/.vim/bundle/vim-colors-solarized/colors/solarized.vim ~/.vim/colors/
 
 # NODE.JS
-wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-source ~/.bash_profile
-nvm install node
-nvm use node
+curl -O https://nodejs.org/dist/v${node_ver}/node-v${node_ver}-linux-x64.tar.xz
+tar -xvf node*.tar.xz -C /usr/local
 
 # RUBY ON RAILS
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-curl -sSL https://get.rvm.io | bash -s stable --ruby --rails
-source ~/.rvm/scripts/rvm
-rvm use 2.2.2 --default
+gem install rails
 gem install bundler
 
 pkgmgr update
 
 # GO
-wget https://storage.googleapis.com/golang/go1.5.1.linux-amd64.tar.gz
+curl -O https://storage.googleapis.com/golang/go${go_ver}.linux-amd64.tar.gz
 tar -C /usr/local -xvf go*.tar.gz
 echo -e "\n# GO" | tee -a ~/.bash_profile
 echo "export GOPATH=$HOME/go" | tee -a ~/.bash_profile
@@ -85,18 +73,18 @@ echo "export GOBIN=$GOPATH/bin" | tee -a ~/.bash_profile
 echo "export PATH=$PATH:$GOPATH/bin" | tee -a ~/.bash_profile
 
 # ERLANG & ELIXIR
-pkgmgr install erlang
-pkgmgr install elixir
+pkgmgr install -y erlang
+pkgmgr install -y elixir
 
 # LISP
-pkgmgr install clisp
+pkgmgr install -y clisp
 
 # MYSQL
-pkgmgr install mysql-client
-pkgmgr install mysql-server mysql-community-server
+pkgmgr install -y mysql-client
+pkgmgr install -y mysql-server mysql-community-server
 
 # POSTGRES
-pkgmgr postgresql-server
+pkgmgr install -y postgresql-server
 echo -e "\n# POSTGRES\nexport PGDATA=/usr/local/var/postgres" >> ~/.bash_profile
 
 # REDIS
@@ -108,10 +96,10 @@ ln -s /opt/redis-stable/src/redis-server /usr/local/bin/redis-server
 # TODO: add redis to auto start on startup
 
 # MONGODB
-pkgmgr install mongodb mongodb-server
+pkgmgr install -y mongodb mongodb-server
 
 # NGINX
-pkgmgr install nginx-full
+pkgmgr install -y nginx-full
 
 # SET CAPS LOCK TO CTRL
 setxkbmap -layout us -option ctrl:nocaps
@@ -125,7 +113,7 @@ if [[ "$vscode" -eq 1 ]]; then
 fi
 
 # TEXMAKER
-pkgmgr install texmaker
+pkgmgr install -y texmaker
 
 # MONITORING
 pip install s-tui --user
