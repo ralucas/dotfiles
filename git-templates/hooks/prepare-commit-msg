@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 COMMIT_FILE=$1
 COMMIT_MSG=$(cat $1)
@@ -7,14 +7,19 @@ STORY_ID_REGEX="[A-Z]{1,2}[0-9]{5,6}"
 STORY_ID_IN_CURRENT_BRANCH_NAME=$(echo "$CURRENT_BRANCH" | grep -Eo "$STORY_ID_REGEX")
 STORY_ID_IN_COMMIT_MESSAGE=$(echo "$COMMIT_MSG" | grep -Eo "$STORY_ID_REGEX")
 
-if [ ! -z "$STORY_ID_IN_COMMIT_MESSAGE" ]; then
-  # Exit if there's a story id in the commit msg and they don't match
-  if [ "$STORY_ID_IN_COMMIT_MESSAGE" != "$STORY_ID_IN_CURRENT_BRANCH_NAME" ]; then
-    echo "Error, your commit message STORY_TASK_ID='$STORY_ID_IN_COMMIT_MESSAGE' is not equal to current branch STORY_TASK_ID='$STORY_ID_IN_CURRENT_BRANCH_NAME'"
-    exit 1
+INTERACTIVE_REBASE=$(git status | grep 'interactive rebase')
+
+# As long as it's not an interactive rebase, i.e. squashing
+if [ -z "$INTERACTIVE_REBASE" ]; then
+  if [ ! -z "$STORY_ID_IN_COMMIT_MESSAGE" ]; then
+    # Exit if there's a story id in the commit msg and they don't match
+    if [ "$STORY_ID_IN_COMMIT_MESSAGE" != "$STORY_ID_IN_CURRENT_BRANCH_NAME" ]; then
+      echo "Error, your commit message STORY_TASK_ID='$STORY_ID_IN_COMMIT_MESSAGE' is not equal to current branch STORY_TASK_ID='$STORY_ID_IN_CURRENT_BRANCH_NAME'"
+      exit 1
+    fi
+  elif [ ! -z "$STORY_ID_IN_CURRENT_BRANCH_NAME" ]; then
+    echo "$STORY_ID_IN_CURRENT_BRANCH_NAME: $COMMIT_MSG" > $COMMIT_FILE
+    echo "STORY ID '$STORY_ID_IN_CURRENT_BRANCH_NAME', matched in current branch name, prepended to commit message. (Use --no-verify to skip)"
   fi
-elif [ ! -z "$STORY_ID_IN_CURRENT_BRANCH_NAME" ]; then
-  echo "$STORY_ID_IN_CURRENT_BRANCH_NAME: $COMMIT_MSG" > $COMMIT_FILE
-  echo "STORY ID '$STORY_ID_IN_CURRENT_BRANCH_NAME', matched in current branch name, prepended to commit message. (Use --no-verify to skip)"
 fi
 
