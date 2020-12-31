@@ -1,8 +1,8 @@
 [user]
 	name = R.A. Lucas
-	email = richard.lucas@alteryx.com
+	email = richard@richardalucas.com
 [core]
-	excludesfile = /Users/richard.lucas/.gitignore_global
+	excludesfile = /Users/richardlucas/.gitignore_global
 	editor = vim
   autocrlf = input
   #autocrlf = true
@@ -13,8 +13,6 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
-[url "git@git.alteryx.com:"]
-	insteadOf = https://git.alteryx.com
 [init]
   #defaultBranch = main
 	templatedir = ~/.git-templates
