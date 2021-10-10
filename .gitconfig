@@ -37,6 +37,8 @@
   ff = only
 #[commit]
   #template = ~/.gitmessage
+[pull]
+  ff = only
 [fetch]
   prune = true
 [rebase]

@@ -1,0 +1,20 @@
+autocmd VimEnter * NERDTree
+let NERDTreeShowHidden=1
+syntax enable
+set background=dark
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags 
+set lines=999 columns=9999
+colorscheme solarized
+set smartindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set number
+set hidden
+" GRB: use fancy buffer closing that doesn't close the split
+cnoremap <expr> bd (getcmdtype() == ':' ? 'Bclose' : 'bd')
+"sets incremental search
+set incsearch
+"sets highlight search
+set hlsearch
+set encoding=utf-8
