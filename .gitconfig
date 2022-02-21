@@ -2,7 +2,7 @@
 	name = R.A. Lucas
 	email = richard@richardalucas.com
 [core]
-	excludesfile = /Users/richardlucas/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	editor = vim
   autocrlf = input
   #autocrlf = true

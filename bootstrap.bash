@@ -6,7 +6,7 @@ go_ver="1.17.2"
 os=$(uname -s | tr "[:upper:]" "[:lower:]")
 os_arch="64"
 
-if [[ "$(arch)" != *"64"* ]]; then
+if [[ "$(uname -m)" != *"64"* ]]; then
   os_arch="32"
 fi
 
@@ -57,6 +57,7 @@ fi
 # GIT SETUP
 echo "setting up git..."
 cp .gitconfig "$HOME"/.gitconfig
+cp .gitignore_global "$HOME"/.gitignore_global
 cp -R git-templates "$HOME"/.git-templates
 chmod a+x "$HOME"/.git-templates/hooks/*
 
