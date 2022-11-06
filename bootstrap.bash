@@ -121,27 +121,6 @@ setopt HIST_BEEP                 # Beep when accessing nonexistent history.]
 
 EOT
 
-# GO
-echo "installing go..."
-go_arch="amd64"
-if [[ "$os_arch" == "32" ]]; then
-  go_arch="386"
-fi
-curl -O "https://storage.googleapis.com/golang/go${go_ver}.${os}-${go_arch}.tar.gz"
-sudo rm -rf /usr/local/go
-sudo tar -C /usr/local -xvf go*.tar.gz
-mkdir -p "$HOME"/.go
-GOPATH="$HOME"/.go
-echo "" >> "$HOME/.zshrc"
-cat <<EOT >> "$HOME/.zshrc"
-## GO
-export PATH=\$PATH:/usr/local/go/bin
-export GOPATH=$GOPATH
-export GOBIN=\$GOPATH/bin
-export PATH=\$PATH:\$GOPATH/bin
-EOT
-sudo rm "${dotfiles_dir}"/go*
-
 # MONITORING
 echo "installing monitoring tools..."
 pip3 install s-tui --user
