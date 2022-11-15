@@ -1,14 +1,16 @@
 #!/bin/sh
 
+set -e
+
 # If it's a go project run necessary tools
 IS_GO_PROJECT=$(ls | grep "go\.mod")
 
 if [ ! -z "$IS_GO_PROJECT" ]; then
   echo "Running go linters and tests..."
-  goimports -w -v ./
-  golangci-lint run --skip-dirs .dependencies ./
+  golangci-lint run --skip-dirs .dependencies ./...
   go vet ./...
   make build
+  make test
 fi
 
 echo "Pre-Commit Checklist"
@@ -16,35 +18,35 @@ echo "Pre-Commit Checklist"
 # Read user input, assign stdin to keyboard
 exec < /dev/tty
 
-while read -p "\n\n========================================\n\nAre proper coding conventions being followed? (Y/n) " yn; do
+while read -p "Are proper coding conventions being followed? (Y/n) " yn; do
     case $yn in
         [Yy] ) break;;
         [Nn] ) echo "Please ensure those are being followed"; exit 1;;
         * ) echo "Please answer y (yes) or n (no):" && continue;
     esac
 done
-while read -p "\n\n========================================\n\nHas the documentation been updated? (Y/n) " yn; do
+while read -p "Has the documentation been updated? (Y/n) " yn; do
     case $yn in
         [Yy] ) break;;
         [Nn] ) echo "Please add or update the docs!"; exit 1;;
         * ) echo "Please answer y (yes) or n (no):" && continue;
     esac
 done
-while read -p "\n\n========================================\n\nHave the necessary tests been written? (Y/n) " yn; do
+while read -p "Have the necessary tests been written? (Y/n) " yn; do
     case $yn in
         [Yy] ) break;;
         [Nn] ) echo "Better go write those tests!"; exit 1;;
         * ) echo "Please answer y (yes) or n (no):" && continue;
     esac
 done
-while read -p "\n\n========================================\n\nDoes it build? (Y/n) " yn; do
+while read -p "Does it build? (Y/n) " yn; do
     case $yn in
         [Yy] ) break;;
         [Nn] ) echo "Fix the build!"; exit 1;;
         * ) echo "Please answer y (yes) or n (no):" && continue;
     esac
 done
-while read -p "\n\n========================================\n\nDoes it run and has it been tested it end-to-end? (Y/n) " yn; do
+while read -p "Does it run and has it been tested it end-to-end? (Y/n) " yn; do
     case $yn in
         [Yy] ) break;;
         [Nn] ) echo "Update it to pass the sanity check"; exit 1;;
