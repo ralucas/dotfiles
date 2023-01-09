@@ -127,6 +127,9 @@ pip3 install s-tui --user
 pkgmgr install htop stress
 echo "PATH=\$PATH:/.local/bin" >> "$HOME"/.zshrc
 
+# Set caps as ctrl
+setxkbmap -option ctrl:nocaps
+
 # DISTRO SPECIFIC
 echo "installing distro specific packages..."
 echo "${dotfiles_dir}/${window_mgr}_packages.txt"
